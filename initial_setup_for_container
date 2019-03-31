@@ -1,0 +1,22 @@
+
+sudo mkdir -p /runc/containers/xonotic/rootfs
+
+cd /runc/containers/xonotic
+
+sudo docker pull zaephor/xonotic-server
+
+sudo docker run -p 26000:26000 zaephor/xonotic-server
+
+#find container id
+sudo docker ps
+sudo docker export container_id -o xonotic.tar
+
+#extract tar into rootfs
+sudo tar -xvf xonotic.tar -C rootfs
+
+#copy config.json from where you have cloned
+cp /home/shivam/Desktop/Major-Project-master/config.json .
+
+#permissions for tool files in tool directory
+sudo chmod 744 *
+
