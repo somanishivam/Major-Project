@@ -1,0 +1,48 @@
+
+sudo apt-get update
+
+#check kernel (4.18.0-15-generic)
+uname -r
+
+sudo apt-get remove docker docker-engine docker.io containerd run criu
+
+#Docker
+sudo apt-get install docker.io
+
+#Install CRIU
+sudo apt-get update && sudo apt-get install -y protobuf-c-compiler libprotobuf-c0-dev protobuf-compiler libprotobuf-dev:amd64 gcc build-essential bsdmainutils python git-core asciidoc make htop git curl supervisor cgroup-lite libapparmor-dev libseccomp-dev libprotobuf-dev libprotobuf-c0-dev protobuf-c-compiler protobuf-compiler python-protobuf libnl-3-dev libcap-dev libaio-dev apparmor libnet-dev
+
+git clone https://github.com/xemul/criu criu
+
+cd criu
+sudo make clean
+sudo make 
+sudo make install
+
+#Then check if your criu works well
+sudo criu check
+sudo criu check --all
+# You will see 'looks good'
+
+#RUNC
+sudo apt-get install runc
+
+#ssh
+sudo apt-get install openssh-server
+
+#ubuntu root 
+sudo passwd
+#enter password 2 times then
+sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# for login ssh root@server without password
+ssh-keygen
+ssh-copy-id -i ~/.ssh/your_key.pub root@server
+ssh -i ~/.ssh/your_key root@server
+
+
+
+
+
+
+
